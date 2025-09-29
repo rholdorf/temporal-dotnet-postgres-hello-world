@@ -1,0 +1,9 @@
+# habilita o namespace default
+system.enableGlobalNamespace: false
+frontend.enableClientVersionCheck:
+  - value: false
+history.persistenceMaxQPS:
+  - value: 3000
+system.advancedVisibilityWritingMode:
+  - value: "on"
+
