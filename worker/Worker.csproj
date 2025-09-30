@@ -9,4 +9,10 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="9.0.9" />
     <PackageReference Include="Temporalio" Version="1.*" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="**/._*.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="**/._*.cs" />
+  </ItemGroup>
 </Project>

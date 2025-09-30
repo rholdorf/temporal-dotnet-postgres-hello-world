@@ -17,7 +17,7 @@ public class MyActivities
     [Activity]
     public string SayHello(string name)
     {
-	_logger.LogInformation("activity was invoked");
+        _logger.LogInformation("activity was invoked");
         return $"Hello, {name}!";
     }
 }
