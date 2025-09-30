@@ -19,11 +19,11 @@ var logger = loggerFactory.CreateLogger("Worker");
 
 // Create a client to localhost on "default" namespace
 var client = await TemporalClient.ConnectAsync(
-		new("temporal:7233")
-		{
-		   Namespace = "default",
-		   LoggerFactory = loggerFactory
-		});
+    new("temporal:7233")
+    {
+        Namespace = "default",
+        LoggerFactory = loggerFactory
+    });
 
 // Cancellation token to shutdown worker on ctrl+c
 using var tokenSource = new CancellationTokenSource();
@@ -40,6 +40,7 @@ var options = new TemporalWorkerOptions("my-task-queue")
    .AddWorkflow<SayHelloWorkflow>();
 
 options.LoggerFactory = loggerFactory;
+
 using var worker = new TemporalWorker(client, options);
 
 logger.LogInformation("Worker started and waiting for tasks at task queue 'my-task-queue'");

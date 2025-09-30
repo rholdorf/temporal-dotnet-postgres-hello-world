@@ -38,8 +38,7 @@ for (var i = 1; i <= 12; i++)
 
 if (client is null)
 {
-    throw new InvalidOperationException(
-        $"Não foi possível resolver/conectar ao Temporal em '{address}' após 12 tentativas.");
+    throw new InvalidOperationException($"Não foi possível resolver/conectar ao Temporal em '{address}' após 12 tentativas.");
 }
 
 logger.LogInformation("Iniciando workflow...");
