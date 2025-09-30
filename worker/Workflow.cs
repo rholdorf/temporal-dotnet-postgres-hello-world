@@ -1,4 +1,4 @@
-namespace MyNamespace;
+namespace Worker;
 
 using Temporalio.Workflows;
 

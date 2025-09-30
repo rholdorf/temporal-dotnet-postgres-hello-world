@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Logging;
 using Temporalio.Client;
 using Temporalio.Worker;
-using MyNamespace;
+using Worker;
 
 using var loggerFactory = LoggerFactory.Create(builder =>
 {

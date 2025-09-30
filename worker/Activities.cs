@@ -1,16 +1,11 @@
-namespace MyNamespace;
+namespace Worker;
 
 using Temporalio.Activities;
 using Microsoft.Extensions.Logging;
 
-public class MyActivities
+public class MyActivities(ILogger<MyActivities> logger)
 {
-    private readonly ILogger<MyActivities> _logger;
-
-    public MyActivities(ILogger<MyActivities> logger)
-    {
-	_logger = logger;
-    }
+    private readonly ILogger<MyActivities> _logger = logger;
 
     // Activities can be async and/or static too! We just demonstrate instance
     // methods since many will use them that way.
