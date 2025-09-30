@@ -1,11 +1,25 @@
+using Microsoft.Extensions.Logging;
 using Temporalio.Client;
 using MyNamespace;
+
+using var loggerFactory = LoggerFactory.Create(builder => 
+{
+	builder.AddSimpleConsole(opt => 
+	{
+		opt.IncludeScopes = true;
+		opt.SingleLine = true;
+		opt.TimestampFormat = "HH:mm:ss ";
+	})
+	.SetMinimumLevel(LogLevel.Information);
+});
+
+var logger = loggerFactory.CreateLogger("starter");
 
 var address = Environment.GetEnvironmentVariable("TEMPORAL_ADDRESS") ?? "temporal:7233";
 var ns      = Environment.GetEnvironmentVariable("TEMPORAL_NAMESPACE") ?? "default";
 var tq      = Environment.GetEnvironmentVariable("TASK_QUEUE") ?? "my-task-queue";
 
-Console.WriteLine($"[starter] Conectando ao Temporal em '{address}' (ns='{ns}', tq='{tq}')");
+logger.LogInformation($"[starter] Conectando ao Temporal em '{address}' (ns='{ns}', tq='{tq}')");
 
 TemporalClient? client = null;
 for (var i = 1; i <= 12; i++)
@@ -17,7 +31,7 @@ for (var i = 1; i <= 12; i++)
     }
     catch (Exception ex)
     {
-        Console.WriteLine($"Temporal ainda indisponível (tentativa {i}): {ex.Message}");
+        logger.LogWarning($"Temporal ainda indisponível (tentativa {i}): {ex.Message}");
         await Task.Delay(TimeSpan.FromSeconds(5));
     }
 }
@@ -28,8 +42,10 @@ if (client is null)
         $"Não foi possível resolver/conectar ao Temporal em '{address}' após 12 tentativas.");
 }
 
+logger.LogInformation("Iniciando workflow...");
+
 var result = await client.ExecuteWorkflowAsync(
     (SayHelloWorkflow wf) => wf.RunAsync("Temporal"),
     new(id: "my-workflow-id", taskQueue: tq));
 
-Console.WriteLine($"Workflow result: {result}");
+logger.LogInformation($"Workflow result: {result}");
